@@ -9,7 +9,6 @@
   :root {
     --bg: #0a0a0f;
     --surface: #12121a;
-    --surface2: #1c1c28;
     --accent: #c8a96e;
     --accent2: #7c6ef0;
     --text: #e8e6e0;
@@ -18,7 +17,6 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -30,7 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* NOISE OVERLAY */
   body::before {
     content: '';
     position: fixed;
@@ -41,7 +38,7 @@
     opacity: 0.5;
   }
 
-  /* NAV */
+  /* ═══════════════ NAV ═══════════════ */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -50,7 +47,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 4rem;
-    background: rgba(10,10,15,0.8);
+    background: rgba(10,10,15,0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
@@ -63,11 +60,7 @@
     text-decoration: none;
   }
 
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 
   .nav-links a {
     color: var(--muted);
@@ -81,7 +74,55 @@
 
   .nav-links a:hover { color: var(--accent); }
 
-  /* HERO */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--accent);
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,15,0.97);
+    z-index: 150;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    backdrop-filter: blur(16px);
+  }
+
+  .nav-drawer.open { display: flex; }
+
+  .nav-drawer a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+
+  .nav-drawer a:hover { color: var(--accent); }
+
+  /* ═══════════════ HERO ═══════════════ */
   #hero {
     min-height: 100vh;
     display: flex;
@@ -92,27 +133,21 @@
   }
 
   .hero-bg {
-    position: absolute;
-    inset: 0;
-    background: 
+    position: absolute; inset: 0;
+    background:
       radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,110,240,0.08) 0%, transparent 70%),
       radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,0.06) 0%, transparent 60%);
   }
 
   .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image: 
+    position: absolute; inset: 0;
+    background-image:
       linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 900px;
-  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
 
   .hero-tag {
     font-family: 'DM Mono', monospace;
@@ -125,14 +160,11 @@
     animation: fadeUp 0.8s ease 0.2s forwards;
   }
 
-  .hero-tag::before {
-    content: '// ';
-    opacity: 0.4;
-  }
+  .hero-tag::before { content: '// '; opacity: 0.4; }
 
   .hero-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-size: clamp(3rem, 8vw, 7rem);
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -141,14 +173,11 @@
     animation: fadeUp 0.8s ease 0.4s forwards;
   }
 
-  .hero-name em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  .hero-name em { font-style: italic; color: var(--accent); }
 
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-size: clamp(1rem, 3vw, 2rem);
     font-weight: 400;
     color: var(--muted);
     margin-bottom: 2rem;
@@ -166,57 +195,25 @@
   }
 
   .hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    display: flex; gap: 1rem; flex-wrap: wrap;
     opacity: 0;
     animation: fadeUp 0.8s ease 1s forwards;
   }
 
-  .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-    padding: 0.9rem 2.2rem;
-    border: none;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-block;
+  /* Inline stats — mobile only */
+  .hero-stats-inline {
+    display: none;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
   }
 
-  .btn-primary:hover {
-    background: var(--text);
-    transform: translateY(-2px);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--accent);
-    padding: 0.9rem 2.2rem;
-    border: 1px solid var(--accent);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-block;
-  }
-
-  .btn-outline:hover {
-    background: rgba(200,169,110,0.1);
-    transform: translateY(-2px);
-  }
-
+  /* Floating stats — desktop only */
   .hero-stats {
     position: absolute;
-    right: 4rem;
-    bottom: 4rem;
+    right: 4rem; bottom: 4rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -224,9 +221,8 @@
     animation: fadeLeft 0.8s ease 1.2s forwards;
   }
 
-  .stat {
-    text-align: right;
-  }
+  .stat-d { text-align: right; }
+  .stat-m { text-align: left; }
 
   .stat-number {
     font-family: 'Playfair Display', serif;
@@ -244,11 +240,42 @@
     text-transform: uppercase;
   }
 
-  /* SECTIONS */
-  section {
-    padding: 6rem 4rem;
-    position: relative;
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.9rem 2.2rem;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
   }
+
+  .btn-primary:hover { background: var(--text); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { background: rgba(200,169,110,0.1); transform: translateY(-2px); }
+
+  /* ═══════════════ SECTIONS ═══════════════ */
+  section { padding: 6rem 4rem; position: relative; }
 
   .section-header {
     display: flex;
@@ -266,22 +293,14 @@
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.8rem, 4vw, 3rem);
     font-weight: 700;
-    color: var(--text);
   }
 
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    max-width: 200px;
-  }
+  .section-line { flex: 1; height: 1px; background: var(--border); max-width: 200px; }
 
-  /* ABOUT */
-  #about {
-    background: var(--surface);
-  }
+  /* ═══════════════ ABOUT ═══════════════ */
+  #about { background: var(--surface); }
 
   .about-grid {
     display: grid;
@@ -290,29 +309,10 @@
     align-items: start;
   }
 
-  .about-text p {
-    color: var(--muted);
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
-  }
+  .about-text p { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
 
-  .about-text p strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .about-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .detail-row {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
-  }
+  .detail-row { display: flex; gap: 2rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
 
   .detail-label {
     font-family: 'DM Mono', monospace;
@@ -323,12 +323,9 @@
     min-width: 100px;
   }
 
-  .detail-value {
-    font-size: 0.9rem;
-    color: var(--text);
-  }
+  .detail-value { font-size: 0.9rem; color: var(--text); }
 
-  /* SERVICES */
+  /* ═══════════════ SERVICES ═══════════════ */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -341,32 +338,22 @@
     padding: 2.5rem;
     position: relative;
     transition: background 0.3s;
-    cursor: default;
   }
 
-  .service-card:hover {
-    background: var(--surface);
-  }
+  .service-card:hover { background: var(--surface); }
 
   .service-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 2px;
-    height: 0;
+    width: 2px; height: 0;
     background: var(--accent);
     transition: height 0.4s ease;
   }
 
-  .service-card:hover::before {
-    height: 100%;
-  }
+  .service-card:hover::before { height: 100%; }
 
-  .service-icon {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    display: block;
-  }
+  .service-icon { font-size: 2rem; margin-bottom: 1.5rem; display: block; }
 
   .service-title {
     font-family: 'Playfair Display', serif;
@@ -376,71 +363,45 @@
     margin-bottom: 1rem;
   }
 
-  .service-desc {
-    font-size: 0.9rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
 
-  /* EXPERIENCE */
-  #experience {
-    background: var(--surface);
-  }
+  /* ═══════════════ EXPERIENCE ═══════════════ */
+  #experience { background: var(--surface); }
 
-  .timeline {
-    position: relative;
-    padding-left: 2rem;
-  }
+  .timeline { position: relative; padding-left: 2rem; }
 
   .timeline::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0.5rem;
-    bottom: 0;
+    left: 0; top: 0.5rem; bottom: 0;
     width: 1px;
     background: var(--border);
   }
 
-  .timeline-item {
-    position: relative;
-    padding-bottom: 3.5rem;
-    padding-left: 2.5rem;
-  }
+  .timeline-item { position: relative; padding-bottom: 3.5rem; padding-left: 2.5rem; }
 
   .timeline-item::before {
     content: '';
     position: absolute;
-    left: -2rem;
-    top: 0.5rem;
-    width: 8px;
-    height: 8px;
+    left: -2rem; top: 0.5rem;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--accent);
     transform: translateX(-3.5px);
   }
 
   .timeline-item:first-child::before {
-    background: var(--accent);
-    width: 12px;
-    height: 12px;
+    width: 12px; height: 12px;
     transform: translateX(-5.5px);
     box-shadow: 0 0 0 4px rgba(200,169,110,0.15);
   }
 
-  .timeline-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-    flex-wrap: wrap;
-  }
+  .timeline-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 
   .timeline-period {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem;
     color: var(--accent);
-    letter-spacing: 0.1em;
     background: rgba(200,169,110,0.1);
     padding: 0.2rem 0.7rem;
     border: 1px solid rgba(200,169,110,0.2);
@@ -450,7 +411,6 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
     color: #4ade80;
-    letter-spacing: 0.1em;
     background: rgba(74,222,128,0.1);
     padding: 0.2rem 0.7rem;
     border: 1px solid rgba(74,222,128,0.2);
@@ -460,44 +420,17 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--text);
     margin-bottom: 0.3rem;
   }
 
-  .timeline-company {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin-bottom: 1.2rem;
-  }
+  .timeline-company { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.2rem; }
 
-  .timeline-points {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-  }
+  .timeline-points { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
 
-  .timeline-points li {
-    font-size: 0.9rem;
-    color: var(--muted);
-    padding-left: 1.2rem;
-    position: relative;
-  }
+  .timeline-points li { font-size: 0.9rem; color: var(--muted); padding-left: 1.2rem; position: relative; }
+  .timeline-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); opacity: 0.6; }
 
-  .timeline-points li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    opacity: 0.6;
-  }
-
-  .stack-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   .stack-tag {
     font-family: 'DM Mono', monospace;
@@ -506,17 +439,12 @@
     background: rgba(124,110,240,0.1);
     border: 1px solid rgba(124,110,240,0.2);
     padding: 0.2rem 0.6rem;
-    letter-spacing: 0.05em;
   }
 
-  /* TECH */
-  .tech-groups {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-  }
+  /* ═══════════════ TECH ═══════════════ */
+  .tech-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
 
-  .tech-group h3 {
+  .tech-group-title {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem;
     color: var(--accent);
@@ -525,11 +453,7 @@
     margin-bottom: 1.5rem;
   }
 
-  .tech-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-  }
+  .tech-items { display: flex; flex-wrap: wrap; gap: 0.7rem; }
 
   .tech-item {
     background: var(--surface);
@@ -542,16 +466,12 @@
     cursor: default;
   }
 
-  .tech-item:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(200,169,110,0.05);
-  }
+  .tech-item:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.05); }
 
-  /* EDUCATION */
-  #education {
-    background: var(--surface);
-  }
+  /* ═══════════════ EDUCATION ═══════════════ */
+  #education { background: var(--surface); }
+
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
   .edu-card {
     background: var(--bg);
@@ -569,28 +489,23 @@
     background: linear-gradient(90deg, var(--accent), var(--accent2));
   }
 
+  .edu-school {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.7rem;
+  }
+
   .edu-degree {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--text);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
   }
 
-  .edu-school {
-    font-size: 0.9rem;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .edu-detail {
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
+  .edu-detail { font-size: 0.85rem; color: var(--muted); }
 
   .edu-grade {
     display: inline-block;
@@ -601,109 +516,77 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.75rem;
     padding: 0.3rem 0.8rem;
-    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
-  /* CONTACT */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
+  /* ═══════════════ CONTACT ═══════════════ */
+  .contact-top { max-width: 680px; margin-bottom: 3rem; }
 
   .contact-intro {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
     font-weight: 700;
     line-height: 1.3;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
-  .contact-intro em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  .contact-intro em { font-style: italic; color: var(--accent); }
+  .contact-text { color: var(--muted); font-size: 1rem; }
 
-  .contact-text {
-    color: var(--muted);
-    font-size: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
+  .platform-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 
-  .contact-link {
+  .platform-card {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
+    padding: 1.4rem 1.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
     text-decoration: none;
     color: var(--text);
-    padding: 1rem 1.5rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    transition: all 0.3s;
-    font-size: 0.9rem;
+    transition: all 0.3s ease;
   }
 
-  .contact-link:hover {
+  a.platform-card:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    background: rgba(200,169,110,0.05);
+    transform: translateY(-3px);
   }
 
-  .contact-link-icon {
-    font-size: 1.2rem;
-    min-width: 24px;
-  }
+  a.platform-card:hover .platform-arrow { color: var(--accent); transform: translateX(4px); }
 
-  .contact-form {
+  .platform-soon { opacity: 0.4; cursor: default; }
+
+  .platform-icon {
+    width: 46px; height: 46px;
+    border-radius: 10px;
+    border: 1px solid transparent;
     display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+  .platform-info { flex: 1; min-width: 0; }
 
-  .form-group label {
+  .platform-name { font-weight: 500; font-size: 0.95rem; margin-bottom: 0.2rem; }
+
+  .platform-sub {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .form-group input,
-  .form-group textarea {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.9rem 1.2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.3s;
-    resize: vertical;
-  }
+  .platform-arrow { font-size: 1.1rem; color: var(--muted); transition: all 0.3s; flex-shrink: 0; }
 
-  .form-group input:focus,
-  .form-group textarea:focus {
-    border-color: var(--accent);
-  }
-
-  .form-group textarea {
-    min-height: 120px;
-  }
-
-  /* FOOTER */
+  /* ═══════════════ FOOTER ═══════════════ */
   footer {
     padding: 2rem 4rem;
     border-top: 1px solid var(--border);
@@ -719,42 +602,77 @@
     letter-spacing: 0.08em;
   }
 
-  /* ANIMATIONS */
+  /* ═══════════════ ANIMATIONS ═══════════════ */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes fadeLeft {
     from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
+    to   { opacity: 1; transform: translateX(0); }
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); opacity: 0.5; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); }
 
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    .nav-links { gap: 1.5rem; }
-    section { padding: 5rem 2rem; }
-    #hero { padding: 7rem 2rem 10rem; }
-    .hero-stats { right: 2rem; bottom: 3rem; flex-direction: row; gap: 2rem; }
-    .about-grid, .contact-grid, .tech-groups { grid-template-columns: 1fr; gap: 3rem; }
-    .services-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  /* ═══════════════ TABLET ≤1024px ═══════════════ */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2.5rem; }
+    section { padding: 5rem 2.5rem; }
+    #hero { padding: 8rem 2.5rem 6rem; }
+    .hero-stats { right: 2.5rem; bottom: 3rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .platform-links { grid-template-columns: repeat(2, 1fr); }
+    .about-grid { gap: 3rem; }
+    footer { padding: 2rem 2.5rem; }
+  }
+
+  /* ═══════════════ MOBILE ≤768px ═══════════════ */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+
+    #hero { padding: 5.5rem 1.5rem 4rem; align-items: flex-start; }
+    .hero-stats { display: none; }
+    .hero-stats-inline { display: flex; }
+    .hero-desc { font-size: 0.95rem; }
+    .hero-cta { flex-direction: column; }
+    .btn-primary, .btn-outline { text-align: center; width: 100%; max-width: 280px; }
+
+    section { padding: 4rem 1.5rem; }
+    .section-header { gap: 1rem; margin-bottom: 2.5rem; }
+    .section-line { display: none; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr; gap: 0; }
+    .service-card { padding: 2rem 1.5rem; }
+
+    .timeline { padding-left: 1rem; }
+    .timeline-item { padding-left: 1.5rem; padding-bottom: 2.5rem; }
+    .timeline-item::before { left: -1rem; }
+    .timeline-role { font-size: 1.15rem; }
+
+    .tech-groups { grid-template-columns: 1fr; gap: 2rem; }
+
+    .platform-links { grid-template-columns: 1fr; }
+    .contact-top { margin-bottom: 2rem; }
+
+    footer { flex-direction: column; gap: 0.6rem; text-align: center; padding: 1.5rem; }
+  }
+
+  /* ═══════════════ SMALL MOBILE ≤480px ═══════════════ */
+  @media (max-width: 480px) {
+    .hero-stats-inline { gap: 1.5rem; }
+    .stat-number { font-size: 1.8rem; }
+    .tech-item { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
+    .platform-card { padding: 1.1rem 1.2rem; gap: 0.9rem; }
+    .platform-icon { width: 40px; height: 40px; }
   }
 </style>
 </head>
@@ -768,9 +686,23 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#tech">Skills</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="drawer">
+  <a href="#about" class="drawer-link">About</a>
+  <a href="#services" class="drawer-link">Services</a>
+  <a href="#experience" class="drawer-link">Experience</a>
+  <a href="#tech" class="drawer-link">Skills</a>
+  <a href="#education" class="drawer-link">Education</a>
+  <a href="#contact" class="drawer-link">Contact</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -779,27 +711,24 @@
   <div class="hero-content">
     <p class="hero-tag">Lead Senior Software Engineer · Sri Lanka</p>
     <h1 class="hero-name">Pradeepika<br><em>Jayasundara</em></h1>
-    <p class="hero-title">Full-Stack PHP & Laravel Architect</p>
+    <p class="hero-title">Full-Stack PHP &amp; Laravel Architect</p>
     <p class="hero-desc">I build robust, scalable enterprise systems — from ERP platforms to cloud-deployed APIs — leading teams and delivering results that matter to your business.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary">Hire Me</a>
       <a href="#experience" class="btn-outline">View Experience</a>
     </div>
+    <!-- Mobile stats (inline, below CTA) -->
+    <div class="hero-stats-inline">
+      <div class="stat-m"><div class="stat-number">10+</div><div class="stat-label">Years Exp.</div></div>
+      <div class="stat-m"><div class="stat-number">MSc</div><div class="stat-label">IT · Merit</div></div>
+      <div class="stat-m"><div class="stat-number">10</div><div class="stat-label">Eng. Led</div></div>
+    </div>
   </div>
-
+  <!-- Desktop stats (floating bottom-right) -->
   <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-number">10+</div>
-      <div class="stat-label">Years Experience</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number">MSc</div>
-      <div class="stat-label">IT · Merit</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number">10</div>
-      <div class="stat-label">Engineers Led</div>
-    </div>
+    <div class="stat-d"><div class="stat-number">10+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-d"><div class="stat-number">MSc</div><div class="stat-label">IT · Merit</div></div>
+    <div class="stat-d"><div class="stat-number">10</div><div class="stat-label">Engineers Led</div></div>
   </div>
 </section>
 
@@ -814,29 +743,14 @@
     <div class="about-text reveal">
       <p>I'm a <strong>Lead Senior Software Engineer</strong> based in Sri Lanka with over 10 years of hands-on experience in full-stack development, system architecture, and engineering leadership.</p>
       <p>My expertise lies in building <strong>enterprise-grade ERP systems</strong>, designing scalable microservices architectures, and leading high-performing development teams. I bring both deep technical skill and the communication ability to work directly with clients and stakeholders.</p>
-      <p>Whether you need a complex backend system built from scratch, a team led through a critical delivery, or an existing platform optimized for scale — I can deliver with precision and accountability.</p>
+      <p>Whether you need a complex backend system built from scratch, a team led through a critical delivery, or an existing platform optimised for scale — I deliver with precision and accountability.</p>
     </div>
-    <div class="about-details reveal">
-      <div class="detail-row">
-        <span class="detail-label">Location</span>
-        <span class="detail-value">Gonawala, Sri Lanka</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Education</span>
-        <span class="detail-value">MSc Information Technology (Merit) — Cardiff Metropolitan University</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Certification</span>
-        <span class="detail-value">Certified Magento Developer</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Availability</span>
-        <span class="detail-value">Open to freelance & contract projects</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Email</span>
-        <span class="detail-value">pradee043jaya@gmail.com</span>
-      </div>
+    <div class="reveal">
+      <div class="detail-row"><span class="detail-label">Location</span><span class="detail-value">Gonawala, Sri Lanka</span></div>
+      <div class="detail-row"><span class="detail-label">Education</span><span class="detail-value">MSc Information Technology (Merit) — Cardiff Metropolitan University</span></div>
+      <div class="detail-row"><span class="detail-label">Certification</span><span class="detail-value">Certified Magento Developer</span></div>
+      <div class="detail-row"><span class="detail-label">Availability</span><span class="detail-value">Open to freelance &amp; contract projects</span></div>
+      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">pradee043jaya@gmail.com</span></div>
     </div>
   </div>
 </section>
@@ -851,33 +765,33 @@
   <div class="services-grid reveal">
     <div class="service-card">
       <span class="service-icon">⚙️</span>
-      <h3 class="service-title">Laravel & PHP Development</h3>
-      <p class="service-desc">Full-stack backend systems using PHP and Laravel — REST APIs, event-driven architecture, queue systems, real-time notifications, and clean, maintainable codebases built on SOLID principles.</p>
+      <h3 class="service-title">Laravel &amp; PHP Development</h3>
+      <p class="service-desc">Full-stack backend systems using PHP and Laravel — REST APIs, event-driven architecture, queue systems, real-time notifications, and clean codebases built on SOLID principles.</p>
     </div>
     <div class="service-card">
       <span class="service-icon">🏗️</span>
       <h3 class="service-title">ERP System Development</h3>
-      <p class="service-desc">End-to-end enterprise resource planning systems covering HR, Payroll, Accounting, POS, Inventory, and Purchasing — designed to handle 100+ concurrent users with high performance.</p>
+      <p class="service-desc">End-to-end enterprise resource planning systems covering HR, Payroll, Accounting, POS, Inventory, and Purchasing — built for 100+ concurrent users with high performance.</p>
     </div>
     <div class="service-card">
       <span class="service-icon">☁️</span>
-      <h3 class="service-title">Cloud Deployment & DevOps</h3>
-      <p class="service-desc">Production environment setup and management on AWS and Microsoft Azure, including CI/CD pipelines, Docker containerization, and server administration for reliable, scalable deployments.</p>
+      <h3 class="service-title">Cloud Deployment &amp; DevOps</h3>
+      <p class="service-desc">Production environment setup on AWS and Microsoft Azure, CI/CD pipelines, Docker containerisation, and server administration for reliable, scalable deployments.</p>
     </div>
     <div class="service-card">
       <span class="service-icon">🔌</span>
-      <h3 class="service-title">API & Integration Development</h3>
+      <h3 class="service-title">API &amp; Integration Development</h3>
       <p class="service-desc">RESTful and SOAP API development, plus third-party integrations — payment gateways, Google, Facebook, Docusign, Algolia, shipping providers, and more.</p>
     </div>
     <div class="service-card">
       <span class="service-icon">🗄️</span>
       <h3 class="service-title">Database Architecture</h3>
-      <p class="service-desc">MySQL and PostgreSQL schema design, ERD creation, query optimization, and data modeling for high-performance enterprise-scale applications.</p>
+      <p class="service-desc">MySQL and PostgreSQL schema design, ERD creation, query optimisation, and data modelling for high-performance enterprise-scale applications.</p>
     </div>
     <div class="service-card">
       <span class="service-icon">👥</span>
       <h3 class="service-title">Technical Leadership</h3>
-      <p class="service-desc">Team leadership, Agile/Scrum facilitation, code review, sprint planning, and architectural guidance — ideal for projects that need an experienced tech lead embedded in the team.</p>
+      <p class="service-desc">Team leadership, Agile/Scrum facilitation, code reviews, sprint planning, and architectural guidance — ideal for projects that need an experienced tech lead.</p>
     </div>
   </div>
 </section>
@@ -899,52 +813,36 @@
       <h3 class="timeline-role">Lead Senior Software Engineer</h3>
       <p class="timeline-company">Oonewoo (pvt) Ltd</p>
       <ul class="timeline-points">
-        <li>Architectural leadership for a full-stack ERP covering HR, Payroll, Accounting, POS, Asset & Stock Management</li>
+        <li>Architectural leadership for a full-stack ERP covering HR, Payroll, Accounting, POS, Asset &amp; Stock Management</li>
         <li>Led and mentored a team of 10 engineers in an Agile/Scrum environment</li>
         <li>Designed ERDs, microservices architecture, CI/CD pipelines on Microsoft Azure</li>
         <li>Implemented real-time notifications (Laravel Reverb) and asynchronous queue systems</li>
-        <li>Optimized MySQL/PostgreSQL for 100+ concurrent enterprise users</li>
+        <li>Optimised MySQL/PostgreSQL for 100+ concurrent enterprise users</li>
       </ul>
       <div class="stack-tags">
-        <span class="stack-tag">PHP</span>
-        <span class="stack-tag">Laravel</span>
-        <span class="stack-tag">Livewire 3</span>
-        <span class="stack-tag">MySQL</span>
-        <span class="stack-tag">PostgreSQL</span>
-        <span class="stack-tag">Azure</span>
-        <span class="stack-tag">Docker</span>
-        <span class="stack-tag">CI/CD</span>
-        <span class="stack-tag">Tailwind CSS</span>
-        <span class="stack-tag">Alpine JS</span>
+        <span class="stack-tag">PHP</span><span class="stack-tag">Laravel</span><span class="stack-tag">Livewire 3</span>
+        <span class="stack-tag">MySQL</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Azure</span>
+        <span class="stack-tag">Docker</span><span class="stack-tag">CI/CD</span><span class="stack-tag">Tailwind CSS</span><span class="stack-tag">Alpine JS</span>
       </div>
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-meta">
-        <span class="timeline-period">Jul 2020 — Dec 2024</span>
-      </div>
+      <div class="timeline-meta"><span class="timeline-period">Jul 2020 — Dec 2024</span></div>
       <h3 class="timeline-role">Senior Software Engineer</h3>
       <p class="timeline-company">Rhino Partners (pvt) Ltd</p>
       <ul class="timeline-points">
         <li>Backend development with Laravel and RESTful/SOAP API development</li>
         <li>Frontend work with React JS and third-party integrations (Google, Facebook, Docusign)</li>
-        <li>Search implementation via Algolia; cloud infrastructure management on AWS</li>
+        <li>Search implementation via Algolia; cloud infrastructure on AWS (EC2, RDS, S3)</li>
       </ul>
       <div class="stack-tags">
-        <span class="stack-tag">PHP</span>
-        <span class="stack-tag">Laravel</span>
-        <span class="stack-tag">React JS</span>
-        <span class="stack-tag">REST API</span>
-        <span class="stack-tag">AWS</span>
-        <span class="stack-tag">Algolia</span>
-        <span class="stack-tag">Docusign</span>
+        <span class="stack-tag">PHP</span><span class="stack-tag">Laravel</span><span class="stack-tag">React JS</span>
+        <span class="stack-tag">REST API</span><span class="stack-tag">AWS</span><span class="stack-tag">Algolia</span><span class="stack-tag">Docusign</span>
       </div>
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-meta">
-        <span class="timeline-period">Nov 2017 — Apr 2020</span>
-      </div>
+      <div class="timeline-meta"><span class="timeline-period">Nov 2017 — Apr 2020</span></div>
       <h3 class="timeline-role">Senior Software Engineer</h3>
       <p class="timeline-company">Efutures (pvt) Ltd</p>
       <ul class="timeline-points">
@@ -953,38 +851,27 @@
         <li>AWS infrastructure and version control with Git/Bitbucket/SVN</li>
       </ul>
       <div class="stack-tags">
-        <span class="stack-tag">PHP</span>
-        <span class="stack-tag">Laravel</span>
-        <span class="stack-tag">CakePHP</span>
-        <span class="stack-tag">React JS</span>
-        <span class="stack-tag">Firebase</span>
-        <span class="stack-tag">AWS</span>
+        <span class="stack-tag">PHP</span><span class="stack-tag">Laravel</span><span class="stack-tag">CakePHP</span>
+        <span class="stack-tag">React JS</span><span class="stack-tag">Firebase</span><span class="stack-tag">AWS</span>
       </div>
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-meta">
-        <span class="timeline-period">Sep 2015 — Aug 2017</span>
-      </div>
+      <div class="timeline-meta"><span class="timeline-period">Sep 2015 — Aug 2017</span></div>
       <h3 class="timeline-role">Software Engineer</h3>
       <p class="timeline-company">Onecreations (pvt) Ltd</p>
       <ul class="timeline-points">
-        <li>Magento 1 & 2 extension and module development; custom theme integration</li>
+        <li>Magento 1 &amp; 2 extension and module development; custom theme integration</li>
         <li>Payment gateway integration (Webshopps, PayPal) and shipping methods (DPD, Royal Mail)</li>
         <li>WordPress CMS module development</li>
       </ul>
       <div class="stack-tags">
-        <span class="stack-tag">PHP</span>
-        <span class="stack-tag">Magento 1</span>
-        <span class="stack-tag">Magento 2</span>
-        <span class="stack-tag">WordPress</span>
+        <span class="stack-tag">PHP</span><span class="stack-tag">Magento 1</span><span class="stack-tag">Magento 2</span><span class="stack-tag">WordPress</span>
       </div>
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-meta">
-        <span class="timeline-period">Oct 2013 — Aug 2015</span>
-      </div>
+      <div class="timeline-meta"><span class="timeline-period">Oct 2013 — Aug 2015</span></div>
       <h3 class="timeline-role">Software Engineer</h3>
       <p class="timeline-company">Shimon Softhouse (pvt) Ltd</p>
       <ul class="timeline-points">
@@ -992,9 +879,7 @@
         <li>Custom module development in ERP systems</li>
       </ul>
       <div class="stack-tags">
-        <span class="stack-tag">PHP</span>
-        <span class="stack-tag">CodeIgniter</span>
-        <span class="stack-tag">ERP</span>
+        <span class="stack-tag">PHP</span><span class="stack-tag">CodeIgniter</span><span class="stack-tag">ERP</span>
       </div>
     </div>
 
@@ -1010,46 +895,31 @@
   </div>
   <div class="tech-groups">
     <div class="reveal">
-      <h3>Backend & Languages</h3>
+      <p class="tech-group-title">Backend &amp; Languages</p>
       <div class="tech-items">
-        <div class="tech-item">PHP</div>
-        <div class="tech-item">Laravel</div>
-        <div class="tech-item">Livewire 3</div>
-        <div class="tech-item">CakePHP</div>
-        <div class="tech-item">CodeIgniter</div>
-        <div class="tech-item">REST API</div>
-        <div class="tech-item">SOAP</div>
+        <div class="tech-item">PHP</div><div class="tech-item">Laravel</div><div class="tech-item">Livewire 3</div>
+        <div class="tech-item">CakePHP</div><div class="tech-item">CodeIgniter</div><div class="tech-item">REST API</div><div class="tech-item">SOAP</div>
       </div>
     </div>
     <div class="reveal">
-      <h3>Frontend</h3>
+      <p class="tech-group-title">Frontend</p>
       <div class="tech-items">
-        <div class="tech-item">React JS</div>
-        <div class="tech-item">Alpine JS</div>
-        <div class="tech-item">Tailwind CSS</div>
-        <div class="tech-item">Livewire</div>
+        <div class="tech-item">React JS</div><div class="tech-item">Alpine JS</div>
+        <div class="tech-item">Tailwind CSS</div><div class="tech-item">Livewire</div>
       </div>
     </div>
     <div class="reveal">
-      <h3>Cloud & DevOps</h3>
+      <p class="tech-group-title">Cloud &amp; DevOps</p>
       <div class="tech-items">
-        <div class="tech-item">Microsoft Azure</div>
-        <div class="tech-item">AWS (EC2, S3, RDS)</div>
-        <div class="tech-item">Docker</div>
-        <div class="tech-item">CI/CD Pipelines</div>
-        <div class="tech-item">SSH</div>
+        <div class="tech-item">Microsoft Azure</div><div class="tech-item">AWS (EC2, S3, RDS)</div>
+        <div class="tech-item">Docker</div><div class="tech-item">CI/CD Pipelines</div><div class="tech-item">SSH</div>
       </div>
     </div>
     <div class="reveal">
-      <h3>Databases & Tools</h3>
+      <p class="tech-group-title">Databases &amp; Tools</p>
       <div class="tech-items">
-        <div class="tech-item">MySQL</div>
-        <div class="tech-item">PostgreSQL</div>
-        <div class="tech-item">Git</div>
-        <div class="tech-item">Bitbucket</div>
-        <div class="tech-item">Jira</div>
-        <div class="tech-item">Algolia</div>
-        <div class="tech-item">Firebase</div>
+        <div class="tech-item">MySQL</div><div class="tech-item">PostgreSQL</div><div class="tech-item">Git</div>
+        <div class="tech-item">Bitbucket</div><div class="tech-item">Jira</div><div class="tech-item">Algolia</div><div class="tech-item">Firebase</div>
       </div>
     </div>
   </div>
@@ -1059,10 +929,10 @@
 <section id="education">
   <div class="section-header reveal">
     <span class="section-num">05</span>
-    <h2 class="section-title">Education & Certifications</h2>
+    <h2 class="section-title">Education &amp; Certifications</h2>
     <div class="section-line"></div>
   </div>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+  <div class="edu-grid">
     <div class="edu-card reveal">
       <div class="edu-school">Cardiff Metropolitan University · 2022–2024</div>
       <div class="edu-degree">MSc in Information Technology</div>
@@ -1072,7 +942,7 @@
     <div class="edu-card reveal">
       <div class="edu-school">Magento · Certification</div>
       <div class="edu-degree">Certified Magento Developer</div>
-      <div class="edu-detail">Official Magento certification demonstrating expertise in e-commerce development, extension, and module creation on Magento 1 & 2 platforms.</div>
+      <div class="edu-detail">Official Magento certification demonstrating expertise in e-commerce development, extension and module creation on Magento 1 &amp; 2 platforms.</div>
     </div>
   </div>
 </section>
@@ -1084,46 +954,69 @@
     <h2 class="section-title">Let's Work Together</h2>
     <div class="section-line"></div>
   </div>
-  <div class="contact-grid">
-    <div class="reveal">
-      <h3 class="contact-intro">Have a project in <em>mind?</em></h3>
-      <p class="contact-text">I'm available for freelance and contract engagements. Whether it's a new system build, API development, cloud migration, or technical leadership — let's talk about what you need.</p>
-      <div class="contact-links">
-        <a href="mailto:pradee043jaya@gmail.com" class="contact-link">
-          <span class="contact-link-icon">✉️</span>
-          pradee043jaya@gmail.com
-        </a>
-        <a href="tel:+94719315650" class="contact-link">
-          <span class="contact-link-icon">📱</span>
-          +94 71 931 5650
-        </a>
-        <a href="tel:+94768690700" class="contact-link">
-          <span class="contact-link-icon">📞</span>
-          +94 76 869 0700
-        </a>
-        <a href="https://u.magento.com/certification/directory/dev/2359183/" target="_blank" class="contact-link">
-          <span class="contact-link-icon">🏆</span>
-          View Magento Certification
-        </a>
+
+  <div class="contact-top reveal">
+    <h3 class="contact-intro">Have a project in <em>mind?</em></h3>
+    <p class="contact-text">I'm available for freelance and contract engagements. Whether it's a new system build, API development, cloud migration, or technical leadership — reach out on any of the platforms below.</p>
+  </div>
+
+  <div class="platform-links reveal">
+
+    <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-URL" target="_blank" class="platform-card">
+      <div class="platform-icon" style="background:rgba(10,102,194,0.12);border-color:rgba(10,102,194,0.3);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </div>
+      <div class="platform-info">
+        <div class="platform-name">LinkedIn</div>
+        <div class="platform-sub">View profile &amp; connect</div>
+      </div>
+      <div class="platform-arrow">→</div>
+    </a>
+
+    <a href="mailto:pradee043jaya@gmail.com" class="platform-card">
+      <div class="platform-icon" style="background:rgba(200,169,110,0.1);border-color:rgba(200,169,110,0.25);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </div>
+      <div class="platform-info">
+        <div class="platform-name">Email</div>
+        <div class="platform-sub">pradee043jaya@gmail.com</div>
+      </div>
+      <div class="platform-arrow">→</div>
+    </a>
+
+    <a href="https://wa.me/94719315650" target="_blank" class="platform-card">
+      <div class="platform-icon" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.25);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <div class="platform-info">
+        <div class="platform-name">WhatsApp</div>
+        <div class="platform-sub">+94 71 931 5650</div>
+      </div>
+      <div class="platform-arrow">→</div>
+    </a>
+
+    <div class="platform-card platform-soon">
+      <div class="platform-icon" style="background:rgba(108,108,108,0.08);border-color:rgba(108,108,108,0.2);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div class="platform-info">
+        <div class="platform-name" style="color:var(--muted);">Upwork</div>
+        <div class="platform-sub" style="color:var(--accent);font-style:italic;">Coming soon</div>
+      </div>
+      <div class="platform-arrow" style="opacity:0.2;">→</div>
     </div>
-    <div class="reveal">
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" placeholder="e.g. John Smith" required>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="you@company.com" required>
-        </div>
-        <div class="form-group">
-          <label>Project Brief</label>
-          <textarea placeholder="Tell me about your project, timeline, and budget..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message →</button>
-      </form>
+
+    <div class="platform-card platform-soon">
+      <div class="platform-icon" style="background:rgba(108,108,108,0.08);border-color:rgba(108,108,108,0.2);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div class="platform-info">
+        <div class="platform-name" style="color:var(--muted);">Fiverr</div>
+        <div class="platform-sub" style="color:var(--accent);font-style:italic;">Coming soon</div>
+      </div>
+      <div class="platform-arrow" style="opacity:0.2;">→</div>
     </div>
+
   </div>
 </section>
 
@@ -1134,35 +1027,35 @@
 </footer>
 
 <script>
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('drawer');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, 100);
+        setTimeout(() => entry.target.classList.add('visible'), 100);
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
-  reveals.forEach(el => observer.observe(el));
-
-  // Form submit mock
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = '✓ Message Sent!';
-    btn.style.background = '#4ade80';
-    btn.style.color = '#0a0a0f';
-    setTimeout(() => {
-      btn.textContent = 'Send Message →';
-      btn.style.background = '';
-      btn.style.color = '';
-      e.target.reset();
-    }, 3000);
-  }
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
