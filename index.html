@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pradeepika Jayasundara — Lead Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1c1c28;
+    --accent: #c8a96e;
+    --accent2: #7c6ef0;
+    --text: #e8e6e0;
+    --muted: #6b6880;
+    --border: rgba(200,169,110,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,110,240,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,0.06) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-tag::before {
+    content: '// ';
+    opacity: 0.4;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.9rem 2.2rem;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--text);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    background: rgba(200,169,110,0.1);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeLeft 0.8s ease 1.2s forwards;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 200px;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--surface);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 100px;
+  }
+
+  .detail-value {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    background: var(--surface);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+
+  .service-card:hover::before {
+    height: 100%;
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* EXPERIENCE */
+  #experience {
+    background: var(--surface);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3.5rem;
+    padding-left: 2.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateX(-3.5px);
+  }
+
+  .timeline-item:first-child::before {
+    background: var(--accent);
+    width: 12px;
+    height: 12px;
+    transform: translateX(-5.5px);
+    box-shadow: 0 0 0 4px rgba(200,169,110,0.15);
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    background: rgba(200,169,110,0.1);
+    padding: 0.2rem 0.7rem;
+    border: 1px solid rgba(200,169,110,0.2);
+  }
+
+  .timeline-current {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: #4ade80;
+    letter-spacing: 0.1em;
+    background: rgba(74,222,128,0.1);
+    padding: 0.2rem 0.7rem;
+    border: 1px solid rgba(74,222,128,0.2);
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .timeline-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-points li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .timeline-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .stack-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent2);
+    background: rgba(124,110,240,0.1);
+    border: 1px solid rgba(124,110,240,0.2);
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* TECH */
+  .tech-groups {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .tech-group h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .tech-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .tech-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tech-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,169,110,0.05);
+  }
+
+  /* EDUCATION */
+  #education {
+    background: var(--surface);
+  }
+
+  .edu-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-school {
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .edu-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .edu-grade {
+    display: inline-block;
+    margin-top: 1rem;
+    background: rgba(200,169,110,0.1);
+    border: 1px solid rgba(200,169,110,0.3);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-intro {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+  }
+
+  .contact-intro em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .contact-text {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .contact-link-icon {
+    font-size: 1.2rem;
+    min-width: 24px;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.9rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); opacity: 0.5; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 2rem; }
+    #hero { padding: 7rem 2rem 10rem; }
+    .hero-stats { right: 2rem; bottom: 3rem; flex-direction: row; gap: 2rem; }
+    .about-grid, .contact-grid, .tech-groups { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">P.Jayasundara</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#tech">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Lead Senior Software Engineer · Sri Lanka</p>
+    <h1 class="hero-name">Pradeepika<br><em>Jayasundara</em></h1>
+    <p class="hero-title">Full-Stack PHP & Laravel Architect</p>
+    <p class="hero-desc">I build robust, scalable enterprise systems — from ERP platforms to cloud-deployed APIs — leading teams and delivering results that matter to your business.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Hire Me</a>
+      <a href="#experience" class="btn-outline">View Experience</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">MSc</div>
+      <div class="stat-label">IT · Merit</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">10</div>
+      <div class="stat-label">Engineers Led</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Lead Senior Software Engineer</strong> based in Sri Lanka with over 10 years of hands-on experience in full-stack development, system architecture, and engineering leadership.</p>
+      <p>My expertise lies in building <strong>enterprise-grade ERP systems</strong>, designing scalable microservices architectures, and leading high-performing development teams. I bring both deep technical skill and the communication ability to work directly with clients and stakeholders.</p>
+      <p>Whether you need a complex backend system built from scratch, a team led through a critical delivery, or an existing platform optimized for scale — I can deliver with precision and accountability.</p>
+    </div>
+    <div class="about-details reveal">
+      <div class="detail-row">
+        <span class="detail-label">Location</span>
+        <span class="detail-value">Gonawala, Sri Lanka</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Education</span>
+        <span class="detail-value">MSc Information Technology (Merit) — Cardiff Metropolitan University</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Certification</span>
+        <span class="detail-value">Certified Magento Developer</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Availability</span>
+        <span class="detail-value">Open to freelance & contract projects</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">pradee043jaya@gmail.com</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">What I Offer</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-icon">⚙️</span>
+      <h3 class="service-title">Laravel & PHP Development</h3>
+      <p class="service-desc">Full-stack backend systems using PHP and Laravel — REST APIs, event-driven architecture, queue systems, real-time notifications, and clean, maintainable codebases built on SOLID principles.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🏗️</span>
+      <h3 class="service-title">ERP System Development</h3>
+      <p class="service-desc">End-to-end enterprise resource planning systems covering HR, Payroll, Accounting, POS, Inventory, and Purchasing — designed to handle 100+ concurrent users with high performance.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">☁️</span>
+      <h3 class="service-title">Cloud Deployment & DevOps</h3>
+      <p class="service-desc">Production environment setup and management on AWS and Microsoft Azure, including CI/CD pipelines, Docker containerization, and server administration for reliable, scalable deployments.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔌</span>
+      <h3 class="service-title">API & Integration Development</h3>
+      <p class="service-desc">RESTful and SOAP API development, plus third-party integrations — payment gateways, Google, Facebook, Docusign, Algolia, shipping providers, and more.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🗄️</span>
+      <h3 class="service-title">Database Architecture</h3>
+      <p class="service-desc">MySQL and PostgreSQL schema design, ERD creation, query optimization, and data modeling for high-performance enterprise-scale applications.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">👥</span>
+      <h3 class="service-title">Technical Leadership</h3>
+      <p class="service-desc">Team leadership, Agile/Scrum facilitation, code review, sprint planning, and architectural guidance — ideal for projects that need an experienced tech lead embedded in the team.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <span class="timeline-period">Jan 2025 — Present</span>
+        <span class="timeline-current">● Current</span>
+      </div>
+      <h3 class="timeline-role">Lead Senior Software Engineer</h3>
+      <p class="timeline-company">Oonewoo (pvt) Ltd</p>
+      <ul class="timeline-points">
+        <li>Architectural leadership for a full-stack ERP covering HR, Payroll, Accounting, POS, Asset & Stock Management</li>
+        <li>Led and mentored a team of 10 engineers in an Agile/Scrum environment</li>
+        <li>Designed ERDs, microservices architecture, CI/CD pipelines on Microsoft Azure</li>
+        <li>Implemented real-time notifications (Laravel Reverb) and asynchronous queue systems</li>
+        <li>Optimized MySQL/PostgreSQL for 100+ concurrent enterprise users</li>
+      </ul>
+      <div class="stack-tags">
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">Laravel</span>
+        <span class="stack-tag">Livewire 3</span>
+        <span class="stack-tag">MySQL</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Azure</span>
+        <span class="stack-tag">Docker</span>
+        <span class="stack-tag">CI/CD</span>
+        <span class="stack-tag">Tailwind CSS</span>
+        <span class="stack-tag">Alpine JS</span>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <span class="timeline-period">Jul 2020 — Dec 2024</span>
+      </div>
+      <h3 class="timeline-role">Senior Software Engineer</h3>
+      <p class="timeline-company">Rhino Partners (pvt) Ltd</p>
+      <ul class="timeline-points">
+        <li>Backend development with Laravel and RESTful/SOAP API development</li>
+        <li>Frontend work with React JS and third-party integrations (Google, Facebook, Docusign)</li>
+        <li>Search implementation via Algolia; cloud infrastructure management on AWS</li>
+      </ul>
+      <div class="stack-tags">
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">Laravel</span>
+        <span class="stack-tag">React JS</span>
+        <span class="stack-tag">REST API</span>
+        <span class="stack-tag">AWS</span>
+        <span class="stack-tag">Algolia</span>
+        <span class="stack-tag">Docusign</span>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <span class="timeline-period">Nov 2017 — Apr 2020</span>
+      </div>
+      <h3 class="timeline-role">Senior Software Engineer</h3>
+      <p class="timeline-company">Efutures (pvt) Ltd</p>
+      <ul class="timeline-points">
+        <li>Laravel backend and CakePHP full-stack development on Linux</li>
+        <li>REST/SOAP web services and Firebase push notification integration</li>
+        <li>AWS infrastructure and version control with Git/Bitbucket/SVN</li>
+      </ul>
+      <div class="stack-tags">
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">Laravel</span>
+        <span class="stack-tag">CakePHP</span>
+        <span class="stack-tag">React JS</span>
+        <span class="stack-tag">Firebase</span>
+        <span class="stack-tag">AWS</span>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <span class="timeline-period">Sep 2015 — Aug 2017</span>
+      </div>
+      <h3 class="timeline-role">Software Engineer</h3>
+      <p class="timeline-company">Onecreations (pvt) Ltd</p>
+      <ul class="timeline-points">
+        <li>Magento 1 & 2 extension and module development; custom theme integration</li>
+        <li>Payment gateway integration (Webshopps, PayPal) and shipping methods (DPD, Royal Mail)</li>
+        <li>WordPress CMS module development</li>
+      </ul>
+      <div class="stack-tags">
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">Magento 1</span>
+        <span class="stack-tag">Magento 2</span>
+        <span class="stack-tag">WordPress</span>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <span class="timeline-period">Oct 2013 — Aug 2015</span>
+      </div>
+      <h3 class="timeline-role">Software Engineer</h3>
+      <p class="timeline-company">Shimon Softhouse (pvt) Ltd</p>
+      <ul class="timeline-points">
+        <li>Web-based application development using CodeIgniter</li>
+        <li>Custom module development in ERP systems</li>
+      </ul>
+      <div class="stack-tags">
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">CodeIgniter</span>
+        <span class="stack-tag">ERP</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-groups">
+    <div class="reveal">
+      <h3>Backend & Languages</h3>
+      <div class="tech-items">
+        <div class="tech-item">PHP</div>
+        <div class="tech-item">Laravel</div>
+        <div class="tech-item">Livewire 3</div>
+        <div class="tech-item">CakePHP</div>
+        <div class="tech-item">CodeIgniter</div>
+        <div class="tech-item">REST API</div>
+        <div class="tech-item">SOAP</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3>Frontend</h3>
+      <div class="tech-items">
+        <div class="tech-item">React JS</div>
+        <div class="tech-item">Alpine JS</div>
+        <div class="tech-item">Tailwind CSS</div>
+        <div class="tech-item">Livewire</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3>Cloud & DevOps</h3>
+      <div class="tech-items">
+        <div class="tech-item">Microsoft Azure</div>
+        <div class="tech-item">AWS (EC2, S3, RDS)</div>
+        <div class="tech-item">Docker</div>
+        <div class="tech-item">CI/CD Pipelines</div>
+        <div class="tech-item">SSH</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3>Databases & Tools</h3>
+      <div class="tech-items">
+        <div class="tech-item">MySQL</div>
+        <div class="tech-item">PostgreSQL</div>
+        <div class="tech-item">Git</div>
+        <div class="tech-item">Bitbucket</div>
+        <div class="tech-item">Jira</div>
+        <div class="tech-item">Algolia</div>
+        <div class="tech-item">Firebase</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Education & Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+    <div class="edu-card reveal">
+      <div class="edu-school">Cardiff Metropolitan University · 2022–2024</div>
+      <div class="edu-degree">MSc in Information Technology</div>
+      <div class="edu-detail">Postgraduate degree covering advanced software engineering, systems design, and IT management.</div>
+      <span class="edu-grade">🏅 Awarded Grade: Merit</span>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-school">Magento · Certification</div>
+      <div class="edu-degree">Certified Magento Developer</div>
+      <div class="edu-detail">Official Magento certification demonstrating expertise in e-commerce development, extension, and module creation on Magento 1 & 2 platforms.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Let's Work Together</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="reveal">
+      <h3 class="contact-intro">Have a project in <em>mind?</em></h3>
+      <p class="contact-text">I'm available for freelance and contract engagements. Whether it's a new system build, API development, cloud migration, or technical leadership — let's talk about what you need.</p>
+      <div class="contact-links">
+        <a href="mailto:pradee043jaya@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉️</span>
+          pradee043jaya@gmail.com
+        </a>
+        <a href="tel:+94719315650" class="contact-link">
+          <span class="contact-link-icon">📱</span>
+          +94 71 931 5650
+        </a>
+        <a href="tel:+94768690700" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          +94 76 869 0700
+        </a>
+        <a href="https://u.magento.com/certification/directory/dev/2359183/" target="_blank" class="contact-link">
+          <span class="contact-link-icon">🏆</span>
+          View Magento Certification
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="e.g. John Smith" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@company.com" required>
+        </div>
+        <div class="form-group">
+          <label>Project Brief</label>
+          <textarea placeholder="Tell me about your project, timeline, and budget..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-text">© 2025 Pradeepika Jayasundara · All Rights Reserved</span>
+  <span class="footer-text">Lead Senior Software Engineer · Sri Lanka</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit mock
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = '#4ade80';
+    btn.style.color = '#0a0a0f';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.style.color = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
